@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+textarea {
+	resize: none;
+}
+
+/* TAILWIND CUSTOM STYLES */
+.placeholder-color::placeholder {
+	@apply text-slate-400;
+}
+
+.bg-opacity {
+	@apply fixed z-10 left-1/2 -translate-x-1/2 h-[30rem] w-[40rem] rounded-full blur-[10rem] bg-[#2a3f83];
+}
+
+.flex-center {
+	@apply flex items-center justify-center;
+}
+
+.btn {
+	@apply font-semibold rounded-md cursor-pointer border border-sky-300 text-sky-300 bg-[#032236] hover:bg-[#032236c1];
+}
+
+.border,
+.border-t,
+.border-b,
+.border-r,
+.border-l {
+	@apply border-gray-800;
+}
+
+.border {
+	@apply border;
+}
+
+.border-t {
+	@apply border-t;
+}
+
+.border-b {
+	@apply border-b;
+}
+
+.border-r {
+	@apply border-r;
+}
+
+.border-l {
+	@apply border-l;
+}
+
+/* COLOR STYLES */
+.bg-primary {
+	@apply bg-[#10141E];
+}
+
+.bg-primary-dark {
+	@apply bg-[#030712];
+}
+
+.bg-secondary {
+	@apply bg-[#1C2029];
+}
+
+.bg-tertiary {
+	@apply bg-[#2A2F3A];
+}
