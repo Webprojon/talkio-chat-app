@@ -5,7 +5,7 @@ import Register from "./pages/Register";
 
 export default function App() {
 	return (
-		<div className="h-screen select-none bg-[#030712]">
+		<div className="flex-center h-screen leading-none select-none tracking-wider text-slate-300 bg-[#030712]">
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/sign-in" element={<Login />} />

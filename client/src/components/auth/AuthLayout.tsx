@@ -4,7 +4,7 @@ import type { AuthLayoutProps } from "../../lib/types";
 
 export default function AuthLayout({ subtitle, children }: AuthLayoutProps) {
 	return (
-		<motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }} className="min-h-screen flex-center tracking-wider">
+		<motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }} className="min-h-screen flex-center">
 			<div className="flex-center flex-wrap gap-10">
 				<div className="flex-center flex-col sm:gap-y-4 flex-1 text-slate-300">
 					<div className="flex-center gap-3 text-sky-300">
