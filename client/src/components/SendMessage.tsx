@@ -11,10 +11,10 @@ export default function SendMessage() {
 				name="sendMessage"
 				id="sendMessage"
 				placeholder="write here..."
-				className="font-light flex-1 h-12 p-2 border rounded-sm outline-0 placeholder-color"
+				className="font-light flex-1 h-15 p-2 border rounded-sm outline-0 placeholder-color"
 			></textarea>
-			<button className="px-6 btn">
-				<IoIosSend className="size-7" />
+			<button className="group px-4 border rounded-sm cursor-pointer text-sky-300">
+				<IoIosSend className="size-7 group-hover:scale-110 transition-all" />
 			</button>
 		</form>
 	);

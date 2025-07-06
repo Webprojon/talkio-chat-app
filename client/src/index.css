@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+.noscrollbar::-webkit-scrollbar {
+	display: none;
+}
+
 textarea {
 	resize: none;
 }
