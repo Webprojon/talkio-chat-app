@@ -6,9 +6,9 @@ import { JWT_SECRET_KEY, NODE_ENV } from "../config/env.js";
 const MAX_AGE = 7 * 24 * 60 * 60 * 1000;
 
 export const signUp = async (req, res) => {
-	const { username, email, password } = req.body;
-
 	try {
+		const { username, email, password } = req.body;
+
 		// Check user exist or not
 		const existUser = await prisma.user.findUnique({
 			where: { email },
@@ -40,7 +40,7 @@ export const signUp = async (req, res) => {
 			sameSite: isProduction ? "None" : "Lax",
 		});
 
-		res.status(201).json({ data: newUser, message: "User created successfully" });
+		res.status(201).json({ success: true, data: newUser, message: "User created successfully" });
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({ message: "Failed to create user !" });
@@ -48,9 +48,9 @@ export const signUp = async (req, res) => {
 };
 
 export const signIn = async (req, res) => {
-	const { email, password } = req.body;
-
 	try {
+		const { email, password } = req.body;
+
 		const user = await prisma.user.findUnique({
 			where: {
 				email,
@@ -81,7 +81,7 @@ export const signIn = async (req, res) => {
 			sameSite: isProduction ? "None" : "Lax",
 		});
 
-		res.status(200).json({ data: userWithoutPassword, message: "User signed in successfully" });
+		res.status(200).json({ success: true, data: userWithoutPassword, message: "User signed in successfully" });
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({ message: "Failed to sign in !" });

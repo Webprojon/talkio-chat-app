@@ -1,5 +1,62 @@
-export const getUsers = (req, res) => {};
+import prisma from "./../lib/prisma.js";
 
-export const getUser = (req, res) => {};
+export const getUsers = async (req, res) => {
+	try {
+		// 1 way - Send users data without password
+		//const users = await prisma.user.findMany({
+		//	select: { id: true, username: true, email: true, avatar },
+		//});
 
-export const deleteUser = (req, res) => {};
+		const users = await prisma.user.findMany();
+
+		// 2 way - Send users data without password
+		const usersWithoutPassword = users.map(({ password, ...rest }) => rest);
+
+		res.status(200).json({ success: true, data: usersWithoutPassword });
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: "Failed to fetch users" });
+	}
+};
+
+export const getUser = async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const user = await prisma.user.findUnique({
+			where: { id },
+		});
+
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
+
+		// Send user data without password
+		const { password: _, ...userWithoutPassword } = user;
+
+		res.status(200).json({ success: true, data: userWithoutPassword });
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: "Failed to fetch user" });
+	}
+};
+
+export const deleteUser = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const tokenUserId = req.user.id;
+
+		if (id !== tokenUserId) {
+			return res.status(403).json({ message: "You are not authorized to delete another user's account." });
+		}
+
+		await prisma.user.delete({
+			where: { id },
+		});
+
+		res.status(200).json({ success: true, message: "User deleted successfully" });
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: "Failed to delete user" });
+	}
+};
