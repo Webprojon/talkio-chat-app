@@ -4,7 +4,7 @@ import { apiRequest } from "../lib/apiRequest";
 import type { AxiosError } from "axios";
 import useUserStore from "../store/userStore";
 
-export const useAuthorization = () => {
+export const useAuthorization = ({ mode }: { mode: "sign-up" | "sign-in" }) => {
 	const navigate = useNavigate();
 	const { setUser } = useUserStore.getState();
 	const [error, setError] = useState("");
@@ -23,22 +23,16 @@ export const useAuthorization = () => {
 
 		const { username, email, password } = formData;
 
-		if (!username || !email || !password) {
+		if (!email || !password || (mode === "sign-up" && !username)) {
 			setError("All fields are required");
 			setLoading(false);
 			return;
 		}
 
+		const payload = mode === "sign-up" ? { username, email, password } : { email, password };
+
 		try {
-			const res = await apiRequest.post(
-				"/auth/sign-up",
-				{
-					username,
-					email,
-					password,
-				},
-				{ withCredentials: true },
-			);
+			const res = await apiRequest.post(`/auth/${mode}`, payload, { withCredentials: true });
 
 			setUser(res.data.data);
 			navigate("/");
@@ -53,7 +47,9 @@ export const useAuthorization = () => {
 	return {
 		error,
 		loading,
+		mode,
 		formData,
+		setFormData,
 		handleChange,
 		handleSubmit,
 	};

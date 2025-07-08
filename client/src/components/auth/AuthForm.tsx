@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
 import Input from "./Input";
-import type { UseAuthorizationProps } from "../../lib/types";
-import { useAuthorization } from "../../hooks/useAuthorization";
+import type { AuthFormProps } from "../../lib/types";
 
-export default function AuthForm({ mode }: UseAuthorizationProps) {
-	const { error, loading, handleChange, formData, handleSubmit } = useAuthorization();
-
+export default function AuthForm({ mode, handleSubmit, handleChange, formData, error, loading }: AuthFormProps) {
 	const isSignUp = mode === "sign-up";
 	const linkTo = isSignUp ? "/sign-in" : "/sign-up";
 	const buttonText = isSignUp ? "Sign up" : "Sign in";

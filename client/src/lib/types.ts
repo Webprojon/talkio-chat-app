@@ -19,17 +19,15 @@ export interface AuthUserType {
 	password: string;
 }
 
-type Mode = "sign-in" | "sign-up";
-
-export interface UseAuthorizationProps {
-	mode: Mode;
-}
-
-export interface AuthFormProps<T> {
-	formData: T;
+export interface AuthFormProps {
+	error: string;
 	loading: boolean;
+	formData: {
+		username: string;
+		email: string;
+		password: string;
+	};
 	mode: "sign-in" | "sign-up";
-	error: Partial<Record<keyof T, string>>;
-	setFormData: React.Dispatch<React.SetStateAction<T>>;
-	handleSubmit: (e: React.FormEvent, data: T) => void;
+	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+	handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

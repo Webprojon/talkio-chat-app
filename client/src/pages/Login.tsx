@@ -1,10 +1,13 @@
 import AuthForm from "../components/auth/AuthForm";
 import AuthLayout from "../components/auth/AuthLayout";
+import { useAuthorization } from "../hooks/useAuthorization";
 
 export default function Login() {
+	const authDetails = useAuthorization({ mode: "sign-in" });
+
 	return (
 		<AuthLayout subtitle="Log in to your account.">
-			<AuthForm mode="sign-in" />
+			<AuthForm {...authDetails} />
 		</AuthLayout>
 	);
 }
