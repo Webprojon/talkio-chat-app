@@ -14,7 +14,7 @@ export interface AuthLayoutProps {
 }
 
 export interface AuthUserType {
-	name?: string;
+	username?: string;
 	email: string;
 	password: string;
 }
@@ -27,10 +27,9 @@ export interface UseAuthorizationProps {
 
 export interface AuthFormProps<T> {
 	formData: T;
-	setFormData: React.Dispatch<React.SetStateAction<T>>;
-	errors: Partial<Record<keyof T, string>>;
-	setErrors: React.Dispatch<React.SetStateAction<Partial<Record<keyof T, string>>>>;
-	handleSubmit: (e: React.FormEvent, data: T, setErrors: AuthFormProps<T>["setErrors"]) => void;
-	isPending: boolean;
+	loading: boolean;
 	mode: "sign-in" | "sign-up";
+	error: Partial<Record<keyof T, string>>;
+	setFormData: React.Dispatch<React.SetStateAction<T>>;
+	handleSubmit: (e: React.FormEvent, data: T) => void;
 }
