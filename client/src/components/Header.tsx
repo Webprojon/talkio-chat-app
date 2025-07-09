@@ -1,31 +1,37 @@
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import useUserStore from "../store/userStore";
 import { PiPaintBrushHousehold } from "react-icons/pi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaPowerOff } from "react-icons/fa6";
 import { useState } from "react";
-import type { AxiosError } from "axios";
 import { apiRequest } from "../lib/apiRequest";
 import { useNavigate } from "react-router-dom";
+import { useCurrentUser } from "../hooks/useCurrentUser";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
-	const { user } = useUserStore.getState();
 	const navigate = useNavigate();
+	const { currentUser } = useCurrentUser();
 
 	const handleToggleMenu = () => {
 		setIsOpen(!isOpen);
 	};
 
-	const handleLogout = async () => {
-		navigate("/sign-in");
-		localStorage.removeItem("user");
-		try {
-			await apiRequest.post("/auth/sign-out", {}, { withCredentials: true });
-		} catch (err) {
-			const error = err as AxiosError<{ message: string }>;
-			console.log(error.response?.data?.message || "Something went wrong");
-		}
+	const logout = useMutation({
+		mutationFn: async () => {
+			await apiRequest.post("/auth/sign-out");
+		},
+		onSuccess: () => {
+			navigate("/sign-in");
+		},
+		onError: (error) => {
+			console.log(error.message || "Something went wrong");
+		},
+	});
+
+	const handleLogout = (e?: React.MouseEvent) => {
+		e?.preventDefault();
+		logout.mutate();
 	};
 
 	const DROPDOWN_ITEMS = [
@@ -58,8 +64,8 @@ export default function Header() {
 	return (
 		<div className="relative flex justify-between items-center border-b p-4 sm:p-2 rounded-t-md bg-[#1C2029]">
 			<div className="flex-center gap-3">
-				<img src={user?.avatar || "./noavatar.png"} alt="user img" className="w-10 h-10 rounded-full object-cover border" />
-				<span className="text-lg font-medium">{user?.username}</span>
+				<img src={currentUser?.avatar || "./noavatar.png"} alt="user img" className="w-10 h-10 rounded-full object-cover border" />
+				<span className="text-lg font-medium">{currentUser?.username}</span>
 			</div>
 			<HiOutlineDotsVertical onClick={handleToggleMenu} className="size-5 cursor-pointer" />
 			{isOpen && (

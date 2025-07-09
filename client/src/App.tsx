@@ -1,48 +1,24 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import AuthRoute from "./components/RequireAuth";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function App() {
-	const router = createBrowserRouter([
-		{
-			path: "/",
-			element: <AuthRoute access="private" />,
-			children: [
-				{
-					index: true,
-					element: <Home />,
-				},
-			],
-		},
-		{
-			path: "/sign-in",
-			element: <AuthRoute access="public" />,
-			children: [
-				{
-					index: true,
-					element: <Login />,
-				},
-			],
-		},
-		{
-			path: "/sign-up",
-			element: <AuthRoute access="public" />,
-			children: [
-				{
-					index: true,
-					element: <Register />,
-				},
-			],
-		},
-	]);
+	const queryClient = new QueryClient();
+
 	return (
-		<div className="flex-center sm:h-screen leading-none select-none tracking-wider text-slate-300 bg-[#030712]">
-			<RouterProvider router={router} />
-			<div className="bg-opacity top-[-33rem]"></div>
-			<div className="bg-opacity bottom-[-34rem]"></div>
-		</div>
+		<QueryClientProvider client={queryClient}>
+			<div className="flex-center sm:h-screen leading-none select-none tracking-wider text-slate-300 bg-[#030712]">
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/sign-in" element={<Login />} />
+					<Route path="/sign-up" element={<Register />} />
+				</Routes>
+				<div className="bg-opacity top-[-33rem]"></div>
+				<div className="bg-opacity bottom-[-34rem]"></div>
+			</div>
+		</QueryClientProvider>
 	);
 }
 export default App;

@@ -13,10 +13,11 @@ export interface AuthLayoutProps {
 	children: React.ReactNode;
 }
 
-export interface AuthUserType {
+export interface UserType {
 	username?: string;
 	email: string;
 	password: string;
+	avatar: string;
 }
 
 export interface AuthFormProps {

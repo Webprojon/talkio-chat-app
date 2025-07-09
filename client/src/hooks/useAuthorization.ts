@@ -2,11 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiRequest } from "../lib/apiRequest";
 import type { AxiosError } from "axios";
-import useUserStore from "../store/userStore";
 
 export const useAuthorization = ({ mode }: { mode: "sign-up" | "sign-in" }) => {
 	const navigate = useNavigate();
-	const { setUser } = useUserStore.getState();
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [formData, setFormData] = useState({ username: "", email: "", password: "" });
@@ -32,9 +30,8 @@ export const useAuthorization = ({ mode }: { mode: "sign-up" | "sign-in" }) => {
 		const payload = mode === "sign-up" ? { username, email, password } : { email, password };
 
 		try {
-			const res = await apiRequest.post(`/auth/${mode}`, payload, { withCredentials: true });
+			await apiRequest.post(`/auth/${mode}`, payload, { withCredentials: true });
 
-			setUser(res.data.data);
 			navigate("/");
 		} catch (err) {
 			const error = err as AxiosError<{ message: string }>;
