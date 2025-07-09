@@ -1,8 +1,18 @@
 import { Navigate, Outlet } from "react-router-dom";
 import useUserStore from "../store/userStore";
 
-export const RequireAuth = () => {
+const AuthRoute = ({ access = "private" }) => {
 	const { user } = useUserStore();
 
-	return user ? <Outlet /> : <Navigate to="/sign-in" replace />;
+	if (access === "private") {
+		return user ? <Outlet /> : <Navigate to="/sign-in" replace />;
+	}
+
+	if (access === "public") {
+		return user ? <Navigate to="/" replace /> : <Outlet />;
+	}
+
+	return <Navigate to="/" />;
 };
+
+export default AuthRoute;

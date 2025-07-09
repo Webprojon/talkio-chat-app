@@ -2,13 +2,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { RequireAuth } from "./components/RequireAuth";
+import AuthRoute from "./components/RequireAuth";
 
 function App() {
 	const router = createBrowserRouter([
 		{
 			path: "/",
-			element: <RequireAuth />,
+			element: <AuthRoute access="private" />,
 			children: [
 				{
 					index: true,
@@ -18,14 +18,25 @@ function App() {
 		},
 		{
 			path: "/sign-in",
-			element: <Login />,
+			element: <AuthRoute access="public" />,
+			children: [
+				{
+					index: true,
+					element: <Login />,
+				},
+			],
 		},
 		{
 			path: "/sign-up",
-			element: <Register />,
+			element: <AuthRoute access="public" />,
+			children: [
+				{
+					index: true,
+					element: <Register />,
+				},
+			],
 		},
 	]);
-
 	return (
 		<div className="flex-center sm:h-screen leading-none select-none tracking-wider text-slate-300 bg-[#030712]">
 			<RouterProvider router={router} />
