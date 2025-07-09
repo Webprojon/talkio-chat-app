@@ -41,6 +41,25 @@ export const getUser = async (req, res) => {
 	}
 };
 
+export const getCurrentUser = async (req, res) => {
+	try {
+		const userId = req.user?.id;
+
+		const user = await prisma.user.findUnique({
+			where: { id: userId },
+		});
+
+		if (!user) return res.status(404).json({ message: "User not found" });
+
+		const { password: _, ...userWithoutPassword } = user;
+
+		res.status(200).json({ success: true, data: userWithoutPassword });
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: "Failed to fetch user" });
+	}
+};
+
 export const deleteUser = async (req, res) => {
 	try {
 		const { id } = req.params;
