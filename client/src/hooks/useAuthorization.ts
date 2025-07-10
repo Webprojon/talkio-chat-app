@@ -31,7 +31,6 @@ export const useAuthorization = ({ mode }: { mode: "sign-up" | "sign-in" }) => {
 
 		try {
 			await apiRequest.post(`/auth/${mode}`, payload, { withCredentials: true });
-
 			navigate("/");
 		} catch (err) {
 			const error = err as AxiosError<{ message: string }>;

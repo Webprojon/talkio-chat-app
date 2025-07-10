@@ -1,11 +1,16 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 
-export const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
+export const ProtectedRoute = ({ access }: { access: "private" | "public" }) => {
 	const { currentUser } = useCurrentUser();
 
-	if (currentUser) {
-		return <Navigate to="/" replace />;
+	if (access === "private") {
+		return currentUser ? <Outlet /> : <Navigate to="/sign-in" replace />;
 	}
-	return <>{children}</>;
+
+	if (access === "public") {
+		return !currentUser ? <Outlet /> : <Navigate to="/" replace />;
+	}
+
+	return <Navigate to="/sign-in" replace />;
 };
