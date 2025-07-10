@@ -31,7 +31,7 @@ export const useAuthorization = ({ mode }: { mode: "sign-up" | "sign-in" }) => {
 
 		try {
 			await apiRequest.post(`/auth/${mode}`, payload, { withCredentials: true });
-			navigate("/");
+			navigate("/chat");
 		} catch (err) {
 			const error = err as AxiosError<{ message: string }>;
 			setError(error.response?.data?.message || "Something went wrong");

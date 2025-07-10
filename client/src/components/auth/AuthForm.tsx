@@ -1,19 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Input from "./Input";
 import type { AuthFormProps } from "../../lib/types";
-import { useEffect } from "react";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 export default function AuthForm({ mode, handleSubmit, handleChange, formData, error, loading }: AuthFormProps) {
-	const { currentUser } = useCurrentUser();
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (currentUser) {
-			navigate("/", { replace: true });
-		}
-	}, [currentUser, navigate]);
-
 	const isSignUp = mode === "sign-up";
 	const linkTo = isSignUp ? "/sign-in" : "/sign-up";
 	const buttonText = isSignUp ? "Sign up" : "Sign in";

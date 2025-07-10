@@ -5,8 +5,8 @@ import { FaPowerOff } from "react-icons/fa6";
 import { useState } from "react";
 import { apiRequest } from "../lib/apiRequest";
 import { useNavigate } from "react-router-dom";
-import { useCurrentUser } from "../hooks/useCurrentUser";
 import { useMutation } from "@tanstack/react-query";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ export default function Header() {
 			await apiRequest.post("/auth/sign-out");
 		},
 		onSuccess: () => {
-			navigate("/sign-in");
+			navigate("/s");
 		},
 		onError: (error) => {
 			console.log(error.message || "Something went wrong");

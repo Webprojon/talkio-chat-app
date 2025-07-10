@@ -3,22 +3,40 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ProtectedRoute } from "./components/ProtectedRoutes";
+import { PrivateRoute, PublicRoute } from "./components/ProtectRoute";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
 	const queryClient = new QueryClient();
 
 	const router = createBrowserRouter([
 		{
-			element: <ProtectedRoute access="private" />,
-			children: [{ path: "/", element: <Home /> }],
+			path: "/",
+			element: <Home />,
 		},
 		{
-			element: <ProtectedRoute access="public" />,
-			children: [
-				{ path: "/sign-in", element: <Login /> },
-				{ path: "/sign-up", element: <Register /> },
-			],
+			path: "/chat",
+			element: (
+				<PrivateRoute>
+					<ChatPage />
+				</PrivateRoute>
+			),
+		},
+		{
+			path: "/sign-in",
+			element: (
+				<PublicRoute>
+					<Login />
+				</PublicRoute>
+			),
+		},
+		{
+			path: "/sign-up",
+			element: (
+				<PublicRoute>
+					<Register />
+				</PublicRoute>
+			),
 		},
 	]);
 

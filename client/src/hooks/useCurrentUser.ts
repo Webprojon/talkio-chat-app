@@ -6,9 +6,8 @@ export const useCurrentUser = () => {
 		queryKey: ["currentUser"],
 		queryFn: async () => {
 			const res = await apiRequest.get("/users/me", { withCredentials: true });
-			return res.data?.data;
+			return res.data.data;
 		},
-		retry: false,
 		staleTime: 1000 * 60 * 5,
 	});
 
