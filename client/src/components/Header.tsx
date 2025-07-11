@@ -2,7 +2,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { PiPaintBrushHousehold } from "react-icons/pi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaPowerOff } from "react-icons/fa6";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { apiRequest } from "../lib/apiRequest";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -13,53 +13,59 @@ export default function Header() {
 	const navigate = useNavigate();
 	const { currentUser } = useCurrentUser();
 
-	const handleToggleMenu = () => {
-		setIsOpen(!isOpen);
-	};
+	const handleToggleMenu = useCallback(() => {
+		setIsOpen((prev) => !prev);
+	}, []);
 
 	const logout = useMutation({
 		mutationFn: async () => {
 			await apiRequest.post("/auth/sign-out");
 		},
 		onSuccess: () => {
-			navigate("/s");
+			navigate("/");
 		},
 		onError: (error) => {
 			console.log(error.message || "Something went wrong");
 		},
 	});
 
-	const handleLogout = (e?: React.MouseEvent) => {
-		e?.preventDefault();
-		logout.mutate();
-	};
+	const handleLogout = useCallback(
+		(e?: React.MouseEvent) => {
+			e?.preventDefault();
+			logout.mutate();
+		},
+		[logout],
+	);
 
-	const DROPDOWN_ITEMS = [
-		{
-			id: 1,
-			label: "Clear History",
-			icon: <PiPaintBrushHousehold className="text-sky-300" />,
-			onClick: undefined,
-		},
-		{
-			id: 2,
-			label: "Delete Chat",
-			icon: <RiDeleteBinLine className="text-sky-300" />,
-			onClick: undefined,
-		},
-		{
-			id: 3,
-			label: "Log out",
-			icon: <FaPowerOff className="text-sky-300" />,
-			onClick: handleLogout,
-		},
-		{
-			id: 4,
-			label: "Delete Account",
-			icon: <RiDeleteBinLine className="text-sky-300" />,
-			onClick: undefined,
-		},
-	];
+	const DROPDOWN_ITEMS = useMemo(
+		() => [
+			{
+				id: 1,
+				label: "Clear History",
+				icon: <PiPaintBrushHousehold className="text-sky-300" />,
+				onClick: undefined,
+			},
+			{
+				id: 2,
+				label: "Delete Chat",
+				icon: <RiDeleteBinLine className="text-sky-300" />,
+				onClick: undefined,
+			},
+			{
+				id: 3,
+				label: "Log out",
+				icon: <FaPowerOff className="text-sky-300" />,
+				onClick: handleLogout,
+			},
+			{
+				id: 4,
+				label: "Delete Account",
+				icon: <RiDeleteBinLine className="text-sky-300" />,
+				onClick: undefined,
+			},
+		],
+		[handleLogout],
+	);
 
 	return (
 		<div className="relative flex justify-between items-center border-b p-4 sm:p-2 rounded-t-md bg-[#1C2029]">

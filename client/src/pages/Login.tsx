@@ -6,7 +6,7 @@ export default function Login() {
 	const authDetails = useAuthorization({ mode: "sign-in" });
 
 	return (
-		<AuthLayout subtitle="Log in to your account.">
+		<AuthLayout subtitle="Sign in to your account.">
 			<AuthForm {...authDetails} />
 		</AuthLayout>
 	);

@@ -6,7 +6,15 @@ export default function AuthForm({ mode, handleSubmit, handleChange, formData, e
 	const isSignUp = mode === "sign-up";
 	const linkTo = isSignUp ? "/sign-in" : "/sign-up";
 	const buttonText = isSignUp ? "Sign up" : "Sign in";
-	const linkText = isSignUp ? "Log in now" : "Create account";
+	const linkText = isSignUp ? (
+		<span>
+			Have an account? <strong>Sign in now</strong>
+		</span>
+	) : (
+		<span>
+			Haven't an account? <strong>Create account</strong>
+		</span>
+	);
 
 	return (
 		<form onSubmit={handleSubmit} className="w-80 flex gap-y-6 flex-col">
@@ -17,7 +25,7 @@ export default function AuthForm({ mode, handleSubmit, handleChange, formData, e
 				{error && <span className="text-xs text-red-400">{error}</span>}
 			</div>
 			<Link to={linkTo} className="text-xs text-sky-300">
-				Have an account? <strong>{linkText}</strong>
+				{linkText}
 			</Link>
 			<button type="submit" className="flex justify-center items-center py-3 px-4 btn">
 				{loading ? <div className="w-5 h-5 animate-spin rounded-full border-1 border-r-0 border-sky-300"></div> : buttonText}
