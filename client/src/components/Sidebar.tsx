@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
+import useChatUser from "../store/chatUser";
 
 interface Chats {
 	id: number;
@@ -10,6 +11,7 @@ interface Chats {
 export default function Sidebar() {
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const [chats, setChats] = useState<Chats[]>([]);
+	const { setUser } = useChatUser();
 
 	const staticChats: Chats[] = [
 		{
@@ -31,6 +33,11 @@ export default function Sidebar() {
 			setChats((prev) => [...prev, chat]);
 		}
 		setSearchTerm("");
+		handleSendChatUser(chat);
+	};
+
+	const handleSendChatUser = (chat: Chats) => {
+		setUser(chat);
 	};
 
 	return (
@@ -69,12 +76,16 @@ export default function Sidebar() {
 				</div>
 			)}
 
-			{chats.map(({ id, username, lastMessage }) => (
-				<div key={id} className="flex items-center gap-3 rounded-sm px-2 py-3 sm:p-2 cursor-pointer transition-all bg-[#252932] hover:bg-[#2a2e38]">
+			{chats.map((chat) => (
+				<div
+					key={chat.id}
+					onClick={() => handleSendChatUser(chat)}
+					className="flex items-center gap-3 rounded-sm px-2 py-3 sm:p-2 cursor-pointer transition-all bg-[#252932] hover:bg-[#2a2e38]"
+				>
 					<img src="./noavatar.png" alt="user img" className="w-9 h-9 rounded-full object-cover border" />
 					<div className="flex flex-col gap-1">
-						<span className="sm:text-sm font-medium">{username}</span>
-						<p className="text-sm sm:text-xs text-stone-400">{lastMessage}</p>
+						<span className="sm:text-sm font-medium">{chat.username}</span>
+						<p className="text-sm sm:text-xs text-stone-400">{chat.lastMessage}</p>
 					</div>
 				</div>
 			))}

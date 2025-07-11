@@ -10,7 +10,7 @@ textarea {
 
 /* TAILWIND CUSTOM STYLES */
 .placeholder-color::placeholder {
-	@apply text-slate-300;
+	@apply text-slate-400;
 }
 
 .bg-opacity {

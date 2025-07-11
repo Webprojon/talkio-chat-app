@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Input from "./Input";
 import type { AuthFormProps } from "../../lib/types";
+import AuthUploadImage from "./AuthUploadImage";
 
 export default function AuthForm({ mode, handleSubmit, handleChange, formData, error, loading }: AuthFormProps) {
 	const isSignUp = mode === "sign-up";
@@ -24,6 +25,9 @@ export default function AuthForm({ mode, handleSubmit, handleChange, formData, e
 				<Input type="password" name="password" id="password" text="Password" value={formData.password} onChange={handleChange} />
 				{error && <span className="text-xs text-red-400">{error}</span>}
 			</div>
+
+			{isSignUp && <AuthUploadImage />}
+
 			<Link to={linkTo} className="text-xs text-sky-300">
 				{linkText}
 			</Link>

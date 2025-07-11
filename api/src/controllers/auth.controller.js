@@ -9,6 +9,13 @@ export const signUp = async (req, res) => {
 	try {
 		const { username, email, password } = req.body;
 
+		// uploaded img
+		if (!req.file) {
+			return res.status(400).json({ error: "No file uploaded" });
+		}
+
+		const imagePath = req.file.path;
+
 		// Check user exist or not
 		const existUser = await prisma.user.findUnique({
 			where: { email },
@@ -23,6 +30,7 @@ export const signUp = async (req, res) => {
 				username,
 				email,
 				password: hashedPassword,
+				avatar: imagePath,
 			},
 		});
 
