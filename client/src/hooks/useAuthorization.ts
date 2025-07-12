@@ -4,6 +4,7 @@ import { apiRequest } from "../lib/apiRequest";
 import type { AxiosError } from "axios";
 
 export const useAuthorization = ({ mode }: { mode: "sign-up" | "sign-in" }) => {
+	const [userImage, setUserImage] = useState<File | null>(null);
 	const navigate = useNavigate();
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
@@ -27,10 +28,26 @@ export const useAuthorization = ({ mode }: { mode: "sign-up" | "sign-in" }) => {
 			return;
 		}
 
-		const payload = mode === "sign-up" ? { username, email, password } : { email, password };
-
 		try {
-			await apiRequest.post(`/auth/${mode}`, payload, { withCredentials: true });
+			if (mode === "sign-up") {
+				const formDataToSend = new FormData();
+				formDataToSend.append("username", username);
+				formDataToSend.append("email", email);
+				formDataToSend.append("password", password);
+				if (userImage) {
+					formDataToSend.append("avatar", userImage);
+				}
+
+				await apiRequest.post(`/auth/sign-up`, formDataToSend, {
+					withCredentials: true,
+					headers: {
+						"Content-Type": "multipart/form-data",
+					},
+				});
+			} else {
+				await apiRequest.post(`/auth/sign-in`, { email, password }, { withCredentials: true });
+			}
+
 			navigate("/chat");
 		} catch (err) {
 			const error = err as AxiosError<{ message: string }>;
@@ -41,12 +58,14 @@ export const useAuthorization = ({ mode }: { mode: "sign-up" | "sign-in" }) => {
 	};
 
 	return {
+		mode,
 		error,
 		loading,
-		mode,
 		formData,
+		userImage,
 		setFormData,
-		handleChange,
 		handleSubmit,
+		handleChange,
+		setUserImage,
 	};
 };

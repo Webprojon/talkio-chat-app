@@ -1,8 +1,12 @@
 import { useState, type ChangeEvent } from "react";
 import { MdOutlineCloudUpload } from "react-icons/md";
 
-export default function AuthUploadImage() {
-	const [userImage, setUserImage] = useState<File | null>(null);
+interface AuthUploadImageProps {
+	userImage: File | null;
+	setUserImage: (file: File | null) => void;
+}
+
+export default function AuthUploadImage({ setUserImage, userImage }: AuthUploadImageProps) {
 	const [preview, setPreview] = useState<string | null>(null);
 
 	const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {

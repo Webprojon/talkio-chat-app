@@ -2,12 +2,8 @@ import { motion } from "framer-motion";
 import { FaRegComments } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { MdArrowForward } from "react-icons/md";
-import { useCurrentUser } from "../hooks/useCurrentUser";
 
 export default function Home() {
-	const { currentUser } = useCurrentUser();
-	console.log(currentUser);
-
 	return (
 		<section className="flex-center h-screen">
 			<motion.div

@@ -28,6 +28,8 @@ export interface AuthFormProps {
 		email: string;
 		password: string;
 	};
+	userImage: File | null;
+	setUserImage: (file: File | null) => void;
 	mode: "sign-in" | "sign-up";
 	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 	handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

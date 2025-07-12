@@ -48,7 +48,9 @@ export const signUp = async (req, res) => {
 			sameSite: isProduction ? "None" : "Lax",
 		});
 
-		res.status(201).json({ success: true, data: newUser, message: "User created successfully" });
+		const { password: _, ...newuserWithoutPassword } = newUser;
+
+		res.status(201).json({ success: true, data: newuserWithoutPassword, message: "User created successfully" });
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({ message: "Failed to create user !" });

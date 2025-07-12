@@ -3,17 +3,17 @@ import Input from "./Input";
 import type { AuthFormProps } from "../../lib/types";
 import AuthUploadImage from "./AuthUploadImage";
 
-export default function AuthForm({ mode, handleSubmit, handleChange, formData, error, loading }: AuthFormProps) {
+export default function AuthForm({ mode, handleSubmit, handleChange, formData, error, loading, setUserImage, userImage }: AuthFormProps) {
 	const isSignUp = mode === "sign-up";
 	const linkTo = isSignUp ? "/sign-in" : "/sign-up";
 	const buttonText = isSignUp ? "Sign up" : "Sign in";
 	const linkText = isSignUp ? (
 		<span>
-			Have an account? <strong>Sign in now</strong>
+			Have an account? <strong className="text-sky-300">Sign in now</strong>
 		</span>
 	) : (
 		<span>
-			Haven't an account? <strong>Create account</strong>
+			Don't have an account? <strong className="text-sky-300">Sign Up</strong>
 		</span>
 	);
 
@@ -26,9 +26,9 @@ export default function AuthForm({ mode, handleSubmit, handleChange, formData, e
 				{error && <span className="text-xs text-red-400">{error}</span>}
 			</div>
 
-			{isSignUp && <AuthUploadImage />}
+			{isSignUp && <AuthUploadImage setUserImage={setUserImage} userImage={userImage} />}
 
-			<Link to={linkTo} className="text-xs text-sky-300">
+			<Link to={linkTo} className="text-xs text-slate-400">
 				{linkText}
 			</Link>
 			<button type="submit" className="flex justify-center items-center py-3 px-4 btn">
