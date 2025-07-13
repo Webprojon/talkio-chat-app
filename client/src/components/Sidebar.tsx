@@ -60,16 +60,16 @@ export default function Sidebar() {
 			</div>
 
 			{searchQuery && (
-				<div className="absolute top-[9%] left-0 bg-[#1d222e] w-full h-[91%] sm:p-3">
-					{filteredUsers.map((user) => (
+				<div className="flex flex-col gap-2 absolute top-[9%] left-0 bg-[#1d222e] w-full h-[91%] sm:p-3">
+					{filteredUsers.map(({ id, avatar, username }) => (
 						<div
-							key={user.id}
-							onClick={() => startNewChatHandler(user.id)}
+							key={id}
+							onClick={() => startNewChatHandler(id)}
 							className="flex items-center gap-3 rounded-sm px-2 py-3 sm:p-2 cursor-pointer transition-all bg-[#2e323b] hover:bg-[#2a2e38]"
 						>
-							<img src={user.avatar || "./noavatar.png"} alt="user img" className="w-9 h-9 rounded-full object-cover border" />
+							<img src={avatar || "./noavatar.png"} alt="user img" className="w-9 h-9 rounded-full object-cover border" />
 							<div className="flex flex-col gap-1">
-								<span className="sm:text-sm font-medium">{user.username}</span>
+								<span className="sm:text-sm font-medium">{username}</span>
 							</div>
 						</div>
 					))}
@@ -78,16 +78,16 @@ export default function Sidebar() {
 				</div>
 			)}
 
-			{userChats.map((chat) => (
+			{userChats.map(({ id, receiver, lastMessage }) => (
 				<div
-					key={chat.id}
-					onClick={() => openChatHandler(chat.id, chat.receiver)}
+					key={id}
+					onClick={() => openChatHandler(id, receiver)}
 					className="flex items-center gap-3 rounded-sm px-2 py-3 sm:p-2 cursor-pointer transition-all bg-[#252932] hover:bg-[#2a2e38]"
 				>
-					<img src={chat.receiver.avatar || "./noavatar.png"} alt="user img" className="w-9 h-9 rounded-full object-cover border" />
+					<img src={receiver.avatar || "./noavatar.png"} alt="user img" className="w-9 h-9 rounded-full object-cover border" />
 					<div className="flex flex-col gap-1">
-						<span className="sm:text-sm font-medium">{chat.receiver.username}</span>
-						<p className="text-sm sm:text-xs text-stone-400">{chat.lastMessage}</p>
+						<span className="sm:text-sm font-medium">{receiver.username}</span>
+						<p className="text-sm sm:text-xs text-stone-400">{lastMessage}</p>
 					</div>
 				</div>
 			))}

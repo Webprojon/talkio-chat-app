@@ -21,7 +21,7 @@ export default function Chat() {
 					<SendMessage />
 				</>
 			) : (
-				<div className="text-sm flex items-center justify-center h-full text-stone-300">Start a new conversation!</div>
+				<div className="text-sm flex items-center justify-center h-full text-stone-300">Select a chat to start messaging!</div>
 			)}
 		</div>
 	);
