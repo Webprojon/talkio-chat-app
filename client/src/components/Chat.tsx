@@ -10,7 +10,7 @@ export default function Chat() {
 			{user ? (
 				<>
 					<div className="flex items-center gap-3 border-b pb-2">
-						<img src="./noavatar.png" alt="user img" className="w-9 h-9 rounded-full object-cover border" />
+						<img src={user?.avatar || "./noavatar.png"} alt="user img" className="w-9 h-9 rounded-full object-cover border" />
 						<div className="flex flex-col">
 							<span className="text-sm font-medium">{user?.username}</span>
 							<p className="text-xs text-stone-400">last seen recently</p>

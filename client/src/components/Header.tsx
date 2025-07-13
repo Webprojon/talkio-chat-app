@@ -1,5 +1,4 @@
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { PiPaintBrushHousehold } from "react-icons/pi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaPowerOff } from "react-icons/fa6";
 import { useCallback, useMemo, useState } from "react";
@@ -10,8 +9,8 @@ import { useCurrentUser } from "../hooks/useCurrentUser";
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
-	const navigate = useNavigate();
 	const { currentUser } = useCurrentUser();
+	const navigate = useNavigate();
 
 	const handleToggleMenu = useCallback(() => {
 		setIsOpen((prev) => !prev);
@@ -41,9 +40,9 @@ export default function Header() {
 		() => [
 			{
 				id: 1,
-				label: "Clear History",
-				icon: <PiPaintBrushHousehold className="text-sky-300" />,
-				onClick: undefined,
+				label: "Log out",
+				icon: <FaPowerOff className="text-sky-300" />,
+				onClick: handleLogout,
 			},
 			{
 				id: 2,
@@ -53,12 +52,6 @@ export default function Header() {
 			},
 			{
 				id: 3,
-				label: "Log out",
-				icon: <FaPowerOff className="text-sky-300" />,
-				onClick: handleLogout,
-			},
-			{
-				id: 4,
 				label: "Delete Account",
 				icon: <RiDeleteBinLine className="text-sky-300" />,
 				onClick: undefined,
@@ -70,7 +63,7 @@ export default function Header() {
 	return (
 		<div className="relative flex justify-between items-center border-b p-4 sm:p-2 rounded-t-md bg-[#1C2029]">
 			<div className="flex-center gap-3">
-				<img src={currentUser?.avatar || "./noavatar.png"} alt="user img" className="w-10 h-10 rounded-full object-cover border" />
+				<img src={currentUser?.avatar || "./noavatar.png"} alt="user img" className="w-11 h-11 rounded-full object-cover border" />
 				<span className="text-lg font-medium">{currentUser?.username}</span>
 			</div>
 			<HiOutlineDotsVertical onClick={handleToggleMenu} className="size-5 cursor-pointer" />

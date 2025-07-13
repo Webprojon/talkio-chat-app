@@ -3,7 +3,7 @@ import { create } from "zustand";
 type Chats = {
 	id: number;
 	username: string;
-	lastMessage: string;
+	avatar: string;
 };
 
 interface ChatUserState {
