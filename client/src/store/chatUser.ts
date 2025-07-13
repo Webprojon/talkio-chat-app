@@ -1,21 +1,9 @@
 import { create } from "zustand";
+import type { ChatUserStore } from "../lib/types";
 
-type Chats = {
-	id: number;
-	username: string;
-	avatar: string;
-};
-
-interface ChatUserState {
-	user: Chats | null;
-	setUser: (chat: Chats) => void;
-	clearUser: () => void;
-}
-
-const useChatUser = create<ChatUserState>((set) => ({
-	user: null,
-	setUser: (chat) => set({ user: chat }),
-	clearUser: () => set({ user: null }),
+const useChatUserStore = create<ChatUserStore>((set) => ({
+	activeChatUser: null,
+	setActiveChatUser: (user) => set({ activeChatUser: user }),
 }));
 
-export default useChatUser;
+export default useChatUserStore;
