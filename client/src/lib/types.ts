@@ -73,6 +73,10 @@ export interface ActiveChatUser {
 	};
 }
 
+export interface Chat {
+	messages: Message[];
+}
+
 // Belongs To Chat User Store ////////////////////////////////////////////////
 export interface ChatUserStore {
 	activeChatUser: ChatUser | null;
