@@ -7,7 +7,7 @@ export default function Chat() {
 	const { activeChatUser } = useChatUserStore() as { activeChatUser: ActiveChatUser | null };
 
 	return (
-		<div className="flex-col gap-4 flex-2 px-4 py-2 hidden sm:flex">
+		<div className="flex-col gap-4 justify-between flex-2 px-4 py-2 hidden sm:flex">
 			{activeChatUser ? (
 				<>
 					<div className="flex items-center gap-3 border-b pb-2">
@@ -17,7 +17,9 @@ export default function Chat() {
 							<p className="text-xs text-stone-400">last seen recently</p>
 						</div>
 					</div>
-					<Messages messages={activeChatUser.data.messages} />
+					<div className="h-105">
+						<Messages messages={activeChatUser.data.messages} />
+					</div>
 					<SendMessage />
 				</>
 			) : (

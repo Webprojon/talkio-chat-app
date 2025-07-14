@@ -68,6 +68,7 @@ export interface ActiveChatUser {
 	id: string;
 	receiver: Receiver;
 	data: {
+		id: string;
 		messages: Message[];
 	};
 }
