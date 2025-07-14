@@ -111,7 +111,7 @@ export default function Sidebar() {
 				</div>
 			))}
 
-			{/* Loading */}
+			{/* Loading indicator */}
 			{isLoading && (
 				<div className="self-center mt-2">
 					<PulseLoader color="#71D0FC" size={7} speedMultiplier={0.7} />

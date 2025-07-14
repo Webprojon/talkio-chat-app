@@ -61,7 +61,7 @@ export default function Chat() {
 									</div>
 								</div>
 							))}
-							{activeChatUser.data.messages.length === 0 && (
+							{chat.messages.length === 0 && (
 								<div className="text-sm flex items-center justify-center text-center h-full text-stone-300">No messages here yet...</div>
 							)}
 							<div ref={messageRef}></div>
