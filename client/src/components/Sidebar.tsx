@@ -6,12 +6,19 @@ import type { ChatUser, UserChat } from "../lib/types";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PulseLoader } from "react-spinners";
+import { RiUserAddLine } from "react-icons/ri";
+import { IoMdClose } from "react-icons/io";
 
 export default function Sidebar() {
 	const [searchQuery, setSearchQuery] = useState<string>("");
+	const [isOpenContact, setIsOpenContact] = useState(false);
 	const { setActiveChatUser } = useChatUserStore();
 	const { currentUser } = useCurrentUser();
 	const queryClient = useQueryClient();
+
+	const toggleContact = () => {
+		setIsOpenContact((prev) => !prev);
+	};
 
 	// All users
 	const { data: allUsers = [] } = useQuery({
@@ -59,6 +66,8 @@ export default function Sidebar() {
 				return user.username.toLowerCase().includes(searchQuery.toLowerCase());
 		  })
 		: [];
+
+	const users = allUsers.filter((user) => user.id !== currentUser.id);
 
 	return (
 		<div className="relative flex flex-col gap-4 sm:gap-2 flex-1 rounded-b-md border-r border-b p-3 bg-[#1C2029]">
@@ -110,6 +119,31 @@ export default function Sidebar() {
 					</div>
 				</div>
 			))}
+
+			{/* Add User */}
+			<div
+				onClick={toggleContact}
+				className="absolute bottom-2 right-2 w-10 h-10 rounded-full flex-center border cursor-pointer hover:scale-105 transition-all"
+			>
+				{isOpenContact ? <IoMdClose className="size-5" /> : <RiUserAddLine className="size-5" />}
+			</div>
+
+			{isOpenContact && (
+				<div onClick={toggleContact} className="absolute top-0 -right-[90%] border-l flex flex-col gap-2 w-[90%] h-full sm:p-3 z-10 bg-[#1C2029]">
+					{users.map(({ id, avatar, username }) => (
+						<div
+							key={id}
+							onClick={() => startNewChat.mutate(id)}
+							className="flex items-center gap-3 rounded-sm px-2 py-3 sm:p-2 cursor-pointer transition-all bg-[#2e323b] hover:bg-[#2a2e38]"
+						>
+							<img src={avatar || "./noavatar.png"} alt="user img" className="w-9 h-9 rounded-full object-cover border" />
+							<div className="flex flex-col gap-1">
+								<span className="sm:text-sm font-medium">{username}</span>
+							</div>
+						</div>
+					))}
+				</div>
+			)}
 
 			{/* Loading indicator */}
 			{isLoading && (

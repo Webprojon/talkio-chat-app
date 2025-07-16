@@ -71,6 +71,7 @@ export default function DropdownMenu() {
 		onSuccess: () => {
 			//queryClient.invalidateQueries({ queryKey: ["chats"] });
 			navigate("/");
+			logout.mutate();
 		},
 		onError: (error) => {
 			console.log(error.message || "Something went wrong");
