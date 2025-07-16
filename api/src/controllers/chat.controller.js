@@ -100,8 +100,41 @@ export const addChat = async (req, res) => {
 
 export const deleteChat = async (req, res) => {
 	try {
+		const { id } = req.params;
+
+		// Delete all messages belong to chat
+		await prisma.message.deleteMany({
+			where: { chatId: id },
+		});
+
+		// Delete this chat
+		await prisma.chat.delete({
+			where: { id },
+		});
+		res.status(200).json({ message: "Chat deleted successfully" });
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({ message: "Failed to delete chat" });
+	}
+};
+
+export const clearHistory = async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		await prisma.message.deleteMany({
+			where: { chatId: id },
+		});
+
+		await prisma.chat.update({
+			where: { id },
+			data: {
+				lastMessage: null,
+			},
+		});
+		res.status(200).json({ message: "History cleared successfully" });
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: "Failed to clear history" });
 	}
 };

@@ -42,6 +42,7 @@ export interface ChatUser {
 	id: string;
 	username: string;
 	avatar: string;
+	data: ActiveChatUser;
 }
 
 export interface UserChat {
@@ -80,5 +81,5 @@ export interface Chat {
 // Belongs To Chat User Store ////////////////////////////////////////////////
 export interface ChatUserStore {
 	activeChatUser: ChatUser | null;
-	setActiveChatUser: (user: ChatUser) => void;
+	setActiveChatUser: (user: ChatUser | null) => void;
 }

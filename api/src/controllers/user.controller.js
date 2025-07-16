@@ -66,14 +66,48 @@ export const deleteUser = async (req, res) => {
 		const tokenUserId = req.user.id;
 
 		if (id !== tokenUserId) {
-			return res.status(403).json({ message: "You are not authorized to delete another user's account." });
+			return res.status(403).json({
+				message: "You are not authorized to delete another user's account.",
+			});
 		}
 
+		// Finding all chats which are belong to current user
+		const chats = await prisma.chat.findMany({
+			where: {
+				userIDs: {
+					has: tokenUserId,
+				},
+			},
+			select: {
+				id: true,
+			},
+		});
+
+		// Finding all messages which are belong to these chats
+		const chatIds = chats.map((chat) => chat.id);
+
+		await prisma.message.deleteMany({
+			where: {
+				chatId: { in: chatIds },
+			},
+		});
+
+		// Deleting chats
+		await prisma.chat.deleteMany({
+			where: {
+				id: { in: chatIds },
+			},
+		});
+
+		// Finally deleting user
 		await prisma.user.delete({
 			where: { id },
 		});
 
-		res.status(200).json({ success: true, message: "User deleted successfully" });
+		res.status(200).json({
+			success: true,
+			message: "User account deleted successfully",
+		});
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({ message: "Failed to delete user" });
