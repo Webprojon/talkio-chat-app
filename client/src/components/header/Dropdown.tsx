@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaPowerOff } from "react-icons/fa6";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { PiPaintBrushHouseholdDuotone } from "react-icons/pi";
@@ -17,9 +17,15 @@ export default function DropdownMenu() {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
-	const toggleMenu = () => {
-		setIsOpen((prev) => !prev);
-	};
+	useEffect(() => {
+		const handleClickOutside = (e: MouseEvent) => {
+			if (!(e.target as HTMLElement).closest(".dropdown-menu")) {
+				setIsOpen(false);
+			}
+		};
+		document.addEventListener("click", handleClickOutside);
+		return () => document.removeEventListener("click", handleClickOutside);
+	}, []);
 
 	const logout = useMutation({
 		mutationFn: async () => {
@@ -58,7 +64,7 @@ export default function DropdownMenu() {
 		},
 	});
 
-	const deleteAccout = useMutation({
+	const deleteAccount = useMutation({
 		mutationFn: async () => {
 			await apiRequest.delete(`/users/${currentUser.id}`);
 		},
@@ -95,10 +101,10 @@ export default function DropdownMenu() {
 				id: 4,
 				label: "Delete account",
 				icon: <RiDeleteBinLine className="text-sky-300" />,
-				onClick: () => deleteAccout.mutate(),
+				onClick: () => deleteAccount.mutate(),
 			},
 		],
-		[logout, deleteChat, clearHistory, deleteAccout],
+		[logout, deleteChat, clearHistory, deleteAccount],
 	);
 
 	const FILTERED_ITEMS = useMemo(() => {
@@ -106,18 +112,25 @@ export default function DropdownMenu() {
 	}, [activeChatUser, ITEMS]);
 
 	return (
-		<>
-			<HiOutlineDotsVertical onClick={toggleMenu} className="size-5 cursor-pointer" />
+		<div className="dropdown-menu">
+			<HiOutlineDotsVertical onClick={() => setIsOpen(true)} className="size-5 cursor-pointer" />
 			{isOpen && (
-				<div onClick={toggleMenu} className="flex flex-col items-start gap-y-5 text-sm absolute top-10 right-4 p-3 border rounded-md z-[400] bg-[#1C2029]">
+				<div className="flex flex-col items-start gap-y-5 text-sm absolute top-10 right-4 p-3 border rounded-md z-[400] bg-[#1C2029]">
 					{FILTERED_ITEMS.map(({ id, icon, label, onClick }) => (
-						<div key={id} className="flex items-center gap-x-3 cursor-pointer hover:text-slate-400" onClick={onClick}>
+						<div
+							key={id}
+							className="flex items-center gap-x-3 cursor-pointer hover:text-slate-400"
+							onClick={() => {
+								onClick();
+								setIsOpen(false);
+							}}
+						>
 							{icon}
 							{label}
 						</div>
 					))}
 				</div>
 			)}
-		</>
+		</div>
 	);
 }
