@@ -1,6 +1,6 @@
 import Chat from "../components/Chat";
 import Header from "../components/header/Header";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/sidebar/Sidebar";
 
 export default function ChatPage() {
 	return (
