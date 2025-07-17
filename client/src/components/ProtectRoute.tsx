@@ -15,10 +15,6 @@ export const PrivateRoute = ({ children }: { children: ReactNode }) => {
 export const PublicRoute = ({ children }: { children: ReactNode }) => {
 	const { currentUser } = useCurrentUser();
 
-	//if (isLoading) {
-	//	return <div className="text-xl font-extralight">Loading...</div>;
-	//}
-
 	if (currentUser) {
 		return <Navigate to="/chat" replace />;
 	}

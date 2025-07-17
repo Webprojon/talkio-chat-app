@@ -32,6 +32,7 @@ export default function DropdownMenu() {
 			await apiRequest.post("/auth/sign-out");
 		},
 		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["currentUser"] });
 			navigate("/");
 		},
 		onError: (error) => {
@@ -69,7 +70,7 @@ export default function DropdownMenu() {
 			await apiRequest.delete(`/users/${currentUser.id}`);
 		},
 		onSuccess: () => {
-			//queryClient.invalidateQueries({ queryKey: ["chats"] });
+			queryClient.invalidateQueries({ queryKey: ["currentUser"] });
 			navigate("/");
 			logout.mutate();
 		},

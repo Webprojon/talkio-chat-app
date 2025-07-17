@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiRequest } from "../lib/apiRequest";
 import type { AxiosError } from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const useAuthorization = ({ mode }: { mode: "sign-up" | "sign-in" }) => {
 	const [userImage, setUserImage] = useState<File | null>(null);
@@ -9,6 +10,7 @@ export const useAuthorization = ({ mode }: { mode: "sign-up" | "sign-in" }) => {
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [formData, setFormData] = useState({ username: "", email: "", password: "" });
+	const queryClient = useQueryClient();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -44,10 +46,11 @@ export const useAuthorization = ({ mode }: { mode: "sign-up" | "sign-in" }) => {
 						"Content-Type": "multipart/form-data",
 					},
 				});
+				await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
 			} else {
 				await apiRequest.post(`/auth/sign-in`, { email, password }, { withCredentials: true });
+				await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
 			}
-
 			navigate("/chat");
 		} catch (err) {
 			const error = err as AxiosError<{ message: string }>;
