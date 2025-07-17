@@ -6,10 +6,9 @@ import { useState } from "react";
 
 interface UserListModalProps {
 	users: ChatUser[];
-	onStartChat: (userId: string) => void;
 }
 
-export default function UserListModal({ users, onStartChat }: UserListModalProps) {
+export default function UserListModal({ users }: UserListModalProps) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const toggleContact = () => {
@@ -28,7 +27,7 @@ export default function UserListModal({ users, onStartChat }: UserListModalProps
 			{isOpen && (
 				<div onClick={toggleContact} className="absolute top-0 -right-[90%] border-l flex flex-col gap-2 w-[90%] h-full sm:p-3 z-10 bg-[#1C2029]">
 					{users.map((user) => (
-						<ChatUserItem key={user.id} user={user} onClick={() => onStartChat(user.id)} />
+						<ChatUserItem key={user.id} user={user} />
 					))}
 				</div>
 			)}
