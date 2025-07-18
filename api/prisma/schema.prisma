@@ -22,6 +22,7 @@ model Chat {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   users       User[]    @relation(fields: [userIDs], references: [id])
   userIDs     String[]  @db.ObjectId
+  createdBy   String    @db.ObjectId
   createdAt   DateTime  @default(now())
   messages    Message[]
   lastMessage String?

@@ -9,26 +9,23 @@ export const getChats = async (req, res) => {
 				userIDs: {
 					hasSome: [tokenUserId],
 				},
+				OR: [{ createdBy: tokenUserId }, { messages: { some: {} } }],
+			},
+			include: {
+				messages: {
+					select: { id: true },
+				},
 			},
 		});
 
 		for (const chat of chats) {
 			const receiverId = chat.userIDs.find((id) => id !== tokenUserId);
 
-			if (!receiverId) {
-				console.warn(`Receiver ID not found for chat: ${chat.id}`);
-				continue;
-			}
+			if (!receiverId) continue;
 
 			const receiver = await prisma.user.findUnique({
-				where: {
-					id: receiverId,
-				},
-				select: {
-					id: true,
-					username: true,
-					avatar: true,
-				},
+				where: { id: receiverId },
+				select: { id: true, username: true, avatar: true },
 			});
 
 			chat.receiver = receiver;
@@ -78,6 +75,7 @@ export const addChat = async (req, res) => {
 				userIDs: {
 					hasEvery: [tokenUserId, receiverId],
 				},
+				createdBy: tokenUserId,
 			},
 		});
 
@@ -88,6 +86,7 @@ export const addChat = async (req, res) => {
 		const newChat = await prisma.chat.create({
 			data: {
 				userIDs: [tokenUserId, receiverId],
+				createdBy: tokenUserId,
 			},
 		});
 

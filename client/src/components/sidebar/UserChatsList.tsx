@@ -29,7 +29,7 @@ export default function UserChatsList({ chats }: UserChatsListProps) {
 					<img src={receiver.avatar || "./noavatar.png"} alt={`${receiver.username}'s avatar`} className="w-9 h-9 rounded-full object-cover border" />
 					<div className="flex flex-col gap-1">
 						<span className="sm:text-sm font-medium">{receiver.username}</span>
-						<p className="text-sm sm:text-xs text-stone-400">{lastMessage}</p>
+						<p className="text-sm sm:text-xs text-stone-400 line-clamp-1">{lastMessage}</p>
 					</div>
 				</div>
 			))}
