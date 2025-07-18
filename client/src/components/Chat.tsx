@@ -5,6 +5,8 @@ import { apiRequest } from "../lib/apiRequest";
 import { IoIosSend } from "react-icons/io";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { format } from "timeago.js";
+import socket from "../lib/socket";
+import { useChatSocket } from "../hooks/useChatSocket";
 
 export default function Chat() {
 	const [text, setText] = useState("");
@@ -12,6 +14,10 @@ export default function Chat() {
 	const [chat, setChat] = useState<Chat>({ messages: [] });
 	const messageRef = useRef<HTMLDivElement | null>(null);
 	const { activeChatUser } = useChatUserStore() as { activeChatUser: ActiveChatUser | null };
+
+	useChatSocket(currentUser?.id, (data) => {
+		setChat((prev: Chat) => ({ ...prev, messages: [...prev.messages, data] }));
+	});
 
 	useEffect(() => {
 		if (activeChatUser) {
@@ -29,7 +35,13 @@ export default function Chat() {
 
 		try {
 			const res = await apiRequest.post(`messages/${activeChatUser?.data?.id}`, { text }, { withCredentials: true });
-			setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
+			const newMessage = res.data;
+			setChat((prev) => ({ ...prev, messages: [...prev.messages, newMessage] }));
+
+			socket.emit("sendMessage", {
+				receiverId: activeChatUser?.receiver.id,
+				data: newMessage,
+			});
 		} catch (err) {
 			console.log(err);
 		} finally {
