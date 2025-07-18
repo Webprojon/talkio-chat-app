@@ -3,7 +3,7 @@ import prisma from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET_KEY, NODE_ENV } from "../config/env.js";
 
-const MAX_AGE = 7 * 24 * 60 * 60 * 1000;
+const MAX_AGE = 4 * 24 * 60 * 60 * 1000;
 
 export const signUp = async (req, res) => {
 	try {
@@ -43,7 +43,7 @@ export const signUp = async (req, res) => {
 
 		res.cookie("token", token, {
 			httpOnly: true,
-			age: MAX_AGE,
+			maxAge: MAX_AGE,
 			secure: isProduction,
 			sameSite: isProduction ? "None" : "Lax",
 		});
@@ -86,7 +86,7 @@ export const signIn = async (req, res) => {
 
 		res.cookie("token", token, {
 			httpOnly: true,
-			age: MAX_AGE,
+			maxAge: MAX_AGE,
 			secure: isProduction,
 			sameSite: isProduction ? "None" : "Lax",
 		});
