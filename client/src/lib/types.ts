@@ -74,7 +74,7 @@ export interface ActiveChatUser {
 	};
 }
 
-export interface Chat {
+export interface Messages {
 	messages: Message[];
 }
 
