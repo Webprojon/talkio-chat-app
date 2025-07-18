@@ -65,4 +65,4 @@ npm install
 npm run dev
 ```
 
-### [talkio]("")
+### [talkio](https://talkio-friends.vercel.app)
