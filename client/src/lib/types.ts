@@ -52,7 +52,7 @@ export interface UserChat {
 }
 
 // Belongs To Chat & Message Component ////////////////////////////////////////////////
-interface Receiver {
+export interface Receiver {
 	id: string;
 	username: string;
 	avatar: string;

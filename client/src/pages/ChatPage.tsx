@@ -1,4 +1,4 @@
-import Chat from "../components/Chat";
+import Chat from "../components/chat/Chat";
 import Header from "../components/header/Header";
 import Sidebar from "../components/sidebar/Sidebar";
 
