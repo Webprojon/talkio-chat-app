@@ -2,7 +2,7 @@ import { Server } from "socket.io";
 
 const io = new Server({
 	cors: {
-		origin: ["http://localhost:5173", "https://talkio-friends-server.onrender.com"],
+		origin: ["http://localhost:5173", "https://talkio-friends.vercel.app"],
 		methods: ["GET", "POST"],
 	},
 });
