@@ -82,4 +82,6 @@ export interface Messages {
 export interface ChatUserStore {
 	activeChatUser: ChatUser | null;
 	setActiveChatUser: (user: ChatUser | null) => void;
+	isChatOpen: boolean;
+	setIsChatOpen: (value: boolean) => void;
 }

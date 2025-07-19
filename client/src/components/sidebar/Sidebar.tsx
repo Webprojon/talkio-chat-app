@@ -39,7 +39,7 @@ export default function Sidebar() {
 			<SearchUserInput value={searchQuery} onChange={setSearchQuery} />
 
 			{searchQuery && (
-				<div className="flex flex-col gap-2 absolute top-12 rounded-b-md left-0 w-full h-[91.6%] p-3 z-10 bg-[#212632]">
+				<div className="flex flex-col gap-3 absolute top-12 rounded-b-md left-0 w-full h-[91.6%] p-3 z-10 bg-[#212632]">
 					{filteredUsers.map((user) => (
 						<ChatUserItem key={user.id} user={user} setSearch={setSearchQuery} />
 					))}

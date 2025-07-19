@@ -24,7 +24,7 @@ export default function ChatUserItem({ user, setSearch }: ChatUserItemProps) {
 	return (
 		<div
 			onClick={() => startNewChat.mutate(user.id)}
-			className="flex items-center gap-3 rounded-sm px-2 py-[6px] cursor-pointer transition-all bg-[#2e323b] hover:bg-[#2a2e38]"
+			className="flex items-center gap-3 rounded-sm px-2 py-[12px] sm:py-[6px] cursor-pointer transition-all bg-[#2e323b] hover:bg-[#2a2e38]"
 		>
 			<img src={user.avatar || "./noavatar.png"} alt={`${user.username}'s avatar`} className="w-9 h-9 rounded-full object-cover border" />
 			<div className="flex flex-col gap-1">

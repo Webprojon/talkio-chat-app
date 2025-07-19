@@ -8,11 +8,13 @@ interface UserChatsListProps {
 
 export default function UserChatsList({ chats }: UserChatsListProps) {
 	const { setActiveChatUser } = useChatUserStore();
+	const { setIsChatOpen } = useChatUserStore();
 
 	const openChatHandler = async (chatId: string, receiver: ChatUser) => {
 		try {
 			const res = await apiRequest(`/chats/${chatId}`, { withCredentials: true });
 			setActiveChatUser({ ...res.data, receiver });
+			setIsChatOpen(true);
 		} catch (err) {
 			console.log(err);
 		}
@@ -24,7 +26,7 @@ export default function UserChatsList({ chats }: UserChatsListProps) {
 				<div
 					key={id}
 					onClick={() => openChatHandler(id, receiver)}
-					className="flex items-center gap-3 rounded-sm px-2 py-[6px] cursor-pointer transition-all bg-[#252932] hover:bg-[#2a2e38]"
+					className="flex items-center gap-3 rounded-sm px-2 py-[12px] sm:py-[6px] cursor-pointer transition-all bg-[#252932] hover:bg-[#2a2e38]"
 				>
 					<img src={receiver.avatar || "./noavatar.png"} alt={`${receiver.username}'s avatar`} className="w-9 h-9 rounded-full object-cover border" />
 					<div className="flex flex-col gap-1">

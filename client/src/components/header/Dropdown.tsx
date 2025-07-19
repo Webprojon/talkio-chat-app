@@ -12,6 +12,7 @@ import useChatUserStore from "../../store/chatUser";
 export default function DropdownMenu() {
 	const { activeChatUser, setActiveChatUser } = useChatUserStore();
 	const currentChatId = activeChatUser?.data?.id;
+	const { setIsChatOpen } = useChatUserStore();
 	const [isOpen, setIsOpen] = useState(false);
 	const { currentUser } = useCurrentUser();
 	const queryClient = useQueryClient();
@@ -46,6 +47,7 @@ export default function DropdownMenu() {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["chats"] });
+			setIsChatOpen(false);
 			setActiveChatUser(null);
 		},
 		onError: (error) => {
