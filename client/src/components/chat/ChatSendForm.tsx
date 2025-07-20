@@ -30,13 +30,13 @@ export default function ChatSendForm({ setMessages }: { setMessages: Dispatch<Se
 		}
 	};
 	return (
-		<form onSubmit={handleSubmit} className="flex gap-4">
+		<form onSubmit={handleSubmit} className="flex gap-4 px-2 py-2 sm:py-0 sm:px-0">
 			<textarea
 				name="message"
 				value={text}
 				placeholder="Message"
 				onChange={(e) => setText(e.target.value)}
-				className="font-light flex-1 p-2 border rounded-sm outline-0 placeholder-color"
+				className="font-light flex-1 p-2 border rounded-sm outline-0 placeholder-color h-16 sm:h-12"
 			></textarea>
 			<button disabled={!text.trim()} className="group px-4 border rounded-sm cursor-pointer text-sky-300">
 				<IoIosSend className="size-7 group-hover:scale-110 transition-all" />

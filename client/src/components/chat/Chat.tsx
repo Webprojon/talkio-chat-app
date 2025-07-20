@@ -24,7 +24,7 @@ export default function Chat() {
 	}, [activeChatUserMessages]);
 
 	return (
-		<div className="flex-col gap-4 justify-between flex-2 px-4 py-2 flex">
+		<div className="flex-col gap-4 justify-between flex-2 sm:px-4 sm:pb-2 flex">
 			{activeChatUser ? (
 				<>
 					<ChatHeader receiver={activeChatUser?.receiver} />

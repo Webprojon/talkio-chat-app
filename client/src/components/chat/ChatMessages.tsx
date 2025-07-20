@@ -12,7 +12,7 @@ export default function ChatMessages({ messages }: { messages: Messages["message
 	}, [messages]);
 
 	return (
-		<div className="flex flex-col gap-5 flex-[2] w-full h-full overflow-y-scroll noscrollbar">
+		<div className="flex flex-col gap-5 flex-[2] w-full h-full overflow-y-scroll noscrollbar px-2 py-2 sm:py-0 sm:px-0">
 			{messages.map(({ id, createdAt, text, userId }) => (
 				<div key={id} className={`flex gap-3 max-w-[55%] sm:max-w-[50%] ${userId === currentUser.id ? "self-end" : "flex-row-reverse self-start"}`}>
 					<div className="px-2 py-1 rounded-sm bg-[#252932]">
