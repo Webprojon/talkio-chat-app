@@ -99,5 +99,13 @@ export const signIn = async (req, res) => {
 };
 
 export const signOut = (req, res) => {
-	res.clearCookie("token").json({ message: "You are logged out" });
+	const isProduction = NODE_ENV === "production";
+
+	res.clearCookie("token", {
+		httpOnly: true,
+		secure: isProduction,
+		sameSite: isProduction ? "None" : "Lax",
+	});
+
+	res.json({ message: "You are logged out" });
 };
