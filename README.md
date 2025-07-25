@@ -1,20 +1,20 @@
-# 💬 Talkio – Real-Time Chat Application
+# Talkio – Real-Time Chat Application
 
 **Talkio** is a full-stack chat web application that allows users to **sign up**, **log in**, **join chat rooms**, and **communicate in real time**. Built with Socket.IO and modern UI design, Talkio delivers a smooth, responsive messaging experience.
 
-> 📌 Ideal for friends.
+> Ideal for friends.
 
 ---
 
-## 🚀 Features
+## Features
 
-- ✅ Real-time messaging using Socket.IO
-- 🔐 Secure Sign In / Sign Up with JWT authentication
-- 🧑‍🤝‍🧑 Create and join chat rooms
-- 🧾 View messages in real-time with username and timestamps
-- 🎨 Beautiful and responsive user interface (Tailwind CSS + Framer Motion)
-- 🌐 Seamless frontend and backend integration
-- 📦 Ready for deployment on Vercel & Render
+- 1 Real-time messaging using Socket.IO
+- 2 Secure Sign In / Sign Up with JWT authentication
+- 3 Create and join chat rooms
+- 4 View messages in real-time with username and timestamps
+- 5 Beautiful and responsive user interface (Tailwind CSS + Framer Motion)
+- 6 Seamless frontend and backend integration
+- 7 Ready for deployment on Vercel & Render
 
 ---
 
@@ -38,9 +38,9 @@
 
 ---
 
-## 🧪 Getting Started
+##  Getting Started
 
-### 📦 1. Clone the repo
+###  1. Clone the repo
 
 
 ```bash
